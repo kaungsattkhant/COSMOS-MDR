@@ -1,0 +1,12 @@
+{
+  "user": [
+    "user.list",
+    "user.create",
+    "user.delete"
+  ],
+  "role": [
+    "role.create",
+    "role.list",
+    "role.assign"
+  ]
+}

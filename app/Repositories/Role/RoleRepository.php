@@ -14,6 +14,9 @@ class RoleRepository
         }
         return $roleQuery->get();
     }
+    public function findById(int $roleId){
+        return Role::findOrFail($roleId);
+    }
     public function updateOrCreate(array $attributes, array $values = [])
     {
         return Role::updateOrCreate($attributes, $values);

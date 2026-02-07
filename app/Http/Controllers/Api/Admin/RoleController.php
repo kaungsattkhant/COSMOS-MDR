@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Api\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Role\RoleResourceList;
-use App\Services\Role\RoleService;
+use App\Services\Admin\Role\RoleService;
+use App\Http\Resources\Admin\Role\RoleResourceList;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class RoleController extends Controller
 {
@@ -13,18 +14,26 @@ class RoleController extends Controller
 
     public function __construct(RoleService $service)
     {
-       $this->service=$service;
+        $this->service = $service;
     }
     public function index(Request $request)
     {
-        $roles=$this->service->getAllRole($request->all());
+        $roles = $this->service->getAllRole($request->all());
         return RoleResourceList::collection($roles);
+    }
+    public function show(int $roleId)
+    {
+        try {
+            $role = $this->service->getRoleDetail($roleId);
+            return new RoleResourceList($role);
+        } catch (ModelNotFoundException $e) {
+            return ResponseMessage('Data not found', 404);
+        }
     }
 
     public function storeOrUpdate(Request $request)
     {
         $role = $this->service->saveRole($request->all());
-        \ResponseData(new RoleResourceList($role));
+        return new RoleResourceList($role);
     }
-
 }

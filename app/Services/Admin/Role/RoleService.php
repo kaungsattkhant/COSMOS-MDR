@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Role;
+namespace App\Services\Admin\Role;
 
 use Illuminate\Support\Facades\DB;
 use App\Repositories\Role\RoleRepository;
@@ -17,6 +17,11 @@ class RoleService
     public function getAllRole(array $data)
     {
         return $this->repo->all($data);
+    }
+
+    public function getRoleDetail(int $roleId)
+    {
+        return $this->repo->findById($roleId);
     }
 
     public function saveRole(array $data)

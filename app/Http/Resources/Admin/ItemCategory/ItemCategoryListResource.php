@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Admin\User;
+namespace App\Http\Resources\Admin\ItemCategory;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserResource extends JsonResource
+class ItemCategoryListResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,11 +16,7 @@ class UserResource extends JsonResource
     {
         return [
             'id'=>$this->id,
-            'username'=>$this->username,
-            'email'=>$this->email,
-            'phone_number'=>$this->phone_number,
-            'type' => $this->type,
-            'permissions'=>$this->permissions,
+            'name'=>$this->name
         ];
     }
 }

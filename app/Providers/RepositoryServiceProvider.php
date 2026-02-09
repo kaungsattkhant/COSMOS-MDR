@@ -12,6 +12,8 @@ use App\Repositories\Supplier\SupplierInterface;
 use App\Repositories\Bank\BankInterface;
 use App\Repositories\Uom\UomRepository;
 use App\Repositories\Uom\UomInterface;
+use App\Repositories\Bank\BankRepository;   
+
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -32,5 +34,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(ItemInterface::class, ItemRepository::class);
         $this->app->bind(SupplierInterface::class, SupplierRepository::class);
         $this->app->bind(UomInterface::class, UomRepository::class);
+        $this->app->bind(BankInterface::class, BankRepository::class);
     }
 }

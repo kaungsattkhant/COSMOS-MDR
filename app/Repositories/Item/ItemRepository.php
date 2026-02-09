@@ -8,7 +8,7 @@ class ItemRepository implements ItemInterface
 {
     public function all(array $data)
     {
-        $query = Item::query()->orderBy('id', 'asc')->filter($data);
+        $query = Item::query()->with(['item_category'])->orderBy('id', 'asc')->filter($data);
 
         if (isset($data['page'])) {
             return $query->paginate($data['per_page'] ?? 20);

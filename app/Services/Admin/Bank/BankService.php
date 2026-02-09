@@ -14,17 +14,17 @@ class BankService
         $this->repo = $repo;
     }
 
-    public function getAll(array $data)
+    public function getAllBanks(array $data)
     {
         return $this->repo->all($data);
     }
 
-    public function getDetail(int $id)
+    public function getBankDetail(int $id)
     {
         return $this->repo->findById($id);
     }
 
-    public function save(array $data)
+    public function saveBank(array $data)
     {
         return DB::transaction(function () use ($data) {
             return $this->repo->updateOrCreate(

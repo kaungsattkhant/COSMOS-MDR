@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Repositories\Supplier;
+namespace App\Repositories\Bank;
 
-interface SupplierInterface
+interface BankInterface
 {
     public function all(array $data);
 
     public function findById(int $id);
 
     public function updateOrCreate(array $attributes, array $values = []);
-
 }

@@ -19,9 +19,12 @@ class ItemListResource extends JsonResource
             'code'              => $this->code,
             'name'              => $this->name,
             'description'       => $this->description,
-            'unit'              => $this->unit,
-            'is_active'         => $this->is_active,
+            'uom_id'  => $this->uom_id,
             'item_category_id'  => $this->item_category_id,
+            'item_category'     => $this->item_category,
+            'uom'     => $this->uom,
+            'is_active'         => $this->is_active,
+
         ];
     }
 }

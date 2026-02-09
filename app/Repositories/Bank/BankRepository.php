@@ -8,9 +8,7 @@ class BankRepository implements BankInterface
 {
     public function all(array $data)
     {
-        $query = Bank::query()->orderBy('id', 'asc')
-            ->when(isset($data['is_active']), fn ($q) => $q->where('is_active', $data['is_active']))
-            ->when(!empty($data['search']), fn ($q) => $q->where('name', 'like', '%' . $data['search'] . '%'));
+        $query = Bank::query()->orderBy('id', 'asc')->filter($data);
 
         if (isset($data['page'])) {
             return $query->paginate($data['per_page'] ?? 20);

@@ -14,23 +14,24 @@ class UomService
         $this->repo = $repo;
     }
 
-    public function getAll(array $data)
+    public function getAllUoms(array $data)
     {
         return $this->repo->all($data);
     }
 
-    public function getDetail(int $id)
+    public function getUomDetail(int $id)
     {
         return $this->repo->findById($id);
     }
 
-    public function save(array $data)
+    public function saveUom(array $data)
     {
         return DB::transaction(function () use ($data) {
             return $this->repo->updateOrCreate(
                 ['id' => $data['id'] ?? null],
-                [
+                [   
                     'name'      => $data['name'],
+                    'uom_code'      => $data['uom_code'],
                     'is_active' => $data['is_active'] ?? true,
                 ]
             );

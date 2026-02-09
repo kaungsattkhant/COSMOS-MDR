@@ -3,31 +3,32 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Services\Admin\Uom\UomService;
-use App\Http\Resources\Admin\Uom\UomListResource;
 use Illuminate\Http\Request;
+use App\Services\Admin\Bank\BankService;
+use App\Http\Resources\Admin\Bank\BankListResource;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class UomController extends Controller
+class BankController extends Controller
 {
-    private $service;
+    //
+     private $service;
 
-    public function __construct(UomService $service)
+    public function __construct(BankService $service)
     {
         $this->service = $service;
     }
 
     public function index(Request $request)
     {
-        $uoms = $this->service->getAllUoms($request->all());
-        return UomListResource::collection($uoms);
+        $banks = $this->service->getAllBanks($request->all());
+        return BankListResource::collection($banks);
     }
 
     public function show(int $id)
     {
         try {
-            $uom = $this->service->getUomDetail($id);
-            return new UomListResource($uom);
+            $bank = $this->service->getDetail($id);
+            return new BankListResource($bank);
         } catch (ModelNotFoundException $e) {
             return ResponseMessage('Data not found', 404);
         }
@@ -37,9 +38,8 @@ class UomController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'uom_code' => 'required|unique:uoms,uom_code',
         ]);
-        $uom = $this->service->saveUom($request->all());
-        return new UomListResource($uom);
+        $bank = $this->service->saveBank($request->all());
+        return new BankListResource($bank);
     }
 }

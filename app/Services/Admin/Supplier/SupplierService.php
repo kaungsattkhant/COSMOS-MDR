@@ -7,7 +7,7 @@ use App\Repositories\Supplier\SupplierInterface;
 
 class SupplierService
 {
-    protected $repo;
+    private $repo;
 
     public function __construct(SupplierInterface $repo)
     {
@@ -43,4 +43,5 @@ class SupplierService
             );
         });
     }
+    
 }

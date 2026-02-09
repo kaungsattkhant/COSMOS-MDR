@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             PermissionSeeder::class,
             ItemCategorySeeder::class,
+            UomSeeder::class,
+            BankSeeder::class,
             SupplierSeeder::class,
             ItemSeeder::class,
         ]);

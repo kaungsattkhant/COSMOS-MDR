@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('uoms', function (Blueprint $table) {
             $table->id();
+            $table->string('uom_code');
             $table->string('name');
             $table->boolean('is_active')->default(true);
             $table->timestamps();

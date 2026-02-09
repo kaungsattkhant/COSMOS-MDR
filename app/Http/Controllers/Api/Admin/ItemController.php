@@ -12,7 +12,6 @@ class ItemController extends Controller
 {
     public function __construct(
         private ItemService $service,
-        private UomService $uomService
     ) {}
 
     public function index(Request $request)
@@ -36,26 +35,5 @@ class ItemController extends Controller
         $item = $this->service->saveItem($request->all());
         return new ItemListResource($item);
     }
-
-    public function uomIndex(Request $request)
-    {
-        $uoms = $this->uomService->getAll($request->all());
-        return UomListResource::collection($uoms);
-    }
-
-    public function uomShow(int $id)
-    {
-        try {
-            $uom = $this->uomService->getDetail($id);
-            return new UomListResource($uom);
-        } catch (ModelNotFoundException $e) {
-            return ResponseMessage('Data not found', 404);
-        }
-    }
-
-    public function uomStoreOrUpdate(Request $request)
-    {
-        $uom = $this->uomService->save($request->all());
-        return new UomListResource($uom);
-    }
+   
 }

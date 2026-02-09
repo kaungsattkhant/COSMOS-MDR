@@ -4,7 +4,7 @@ namespace App\Repositories\Supplier;
 
 use App\Models\Supplier;
 
-class SupplierRepository
+class SupplierRepository implements SupplierInterface
 {
     public function all(array $data)
     {
@@ -26,4 +26,5 @@ class SupplierRepository
     {
         return Supplier::updateOrCreate($attributes, $values);
     }
+    
 }

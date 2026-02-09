@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Item;
+use App\Models\Uom;
 use App\Models\ItemCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -26,6 +27,7 @@ class ItemFactory extends Factory
             'code'              => strtoupper($this->faker->unique()->regexify('[A-Z0-9]{6,10}')),
             'name'              => $name,
             'description'       => $this->faker->optional()->sentence(),
+            'uom_id'  => Uom::inRandomOrder()->first()?->id ,
             'item_category_id'  => ItemCategory::query()->inRandomOrder()->first()?->id,
             'is_active'         => true,
         ];

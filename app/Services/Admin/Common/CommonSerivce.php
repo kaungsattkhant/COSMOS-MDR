@@ -20,6 +20,13 @@ class CommonSerivce
                 ResponseMessage('Invalid type provided', 400);
             }
 
+            //  Permission name based on model
+            $permission = "{$type}.toggle";
+
+            if (!auth()->user()->can($permission)) {
+                return ResponseMessage('Unauthorized', 403);
+            }
+
             $record = $modelClass::find($data->id);
             if (!$record) {
                 ResponseMessage('Data not found', 404);

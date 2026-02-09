@@ -2,11 +2,49 @@
   "user": [
     "user.list",
     "user.create",
-    "user.delete"
+    "user.detail",
+    "user.toggle"
   ],
   "role": [
     "role.create",
     "role.list",
     "role.assign"
+  ],
+  "item_category":[
+    "item_category.list",
+    "item_category.create"
+  ],
+  "uom":[
+    "uom.list",
+    "uom.create"
+  ],
+  "bank":[
+    "bank.list",
+    "bank.create"
+  ],
+  "supplier":[
+    "supplier.list",
+    "supplier.create",
+    "supplier.detail",
+    "supplier.toggle"
+  ],
+  "item":[
+    "item.list",
+    "item.create",
+    "item.detail",
+    "item.toggle"
+  ],
+  "customer":[
+    "customer.list",
+    "customer.create",
+    "customer.detail",
+    "customer.toggle"
+
+  ],
+   "inventory":[
+    "inventory.list",
+    "inventory.create",
+    "inventory.detail",
+    "inventory.toggle"
   ]
 }

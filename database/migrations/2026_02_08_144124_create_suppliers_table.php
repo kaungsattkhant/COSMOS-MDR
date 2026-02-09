@@ -22,6 +22,7 @@ return new class extends Migration
             $table->double('credit_limit_amount')->default(0);
             $table->foreignId('bank_id')->nullable()->constrained('banks')->nullOnDelete();
             $table->boolean('is_active')->default(true);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

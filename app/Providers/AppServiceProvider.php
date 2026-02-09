@@ -25,6 +25,12 @@ class AppServiceProvider extends ServiceProvider
             [
                 'user' => 'App\Models\User',
                 'role' => 'App\Models\Role',
+                'uom'=> 'App\Models\Uom',
+                'customer'=> 'App\Models\Customer',
+                'supplier'=> 'App\Models\Supplier',
+                'bank'=> 'App\Models\Bank',
+                'item_category'=> 'App\Models\ItemCategory',
+                'item'=> 'App\Models\Item',
             ]);
     }
 }

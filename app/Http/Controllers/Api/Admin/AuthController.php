@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Admin\Permission\PermissionResource;
+use App\Http\Resources\Admin\User\UserListResource;
 use App\Services\Admin\Auth\AuthService;
 
 class AuthController extends Controller
@@ -29,7 +31,13 @@ class AuthController extends Controller
 
         return response()->json([
             'token' => $token,
-            'data'  => $user,
+            'data'  => new UserListResource($user),
         ]);
+    }
+
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+        return \ResponseMessage('Logout successfully',200);
     }
 }

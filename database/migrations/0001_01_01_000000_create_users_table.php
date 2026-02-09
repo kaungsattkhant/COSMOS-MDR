@@ -19,7 +19,9 @@ return new class extends Migration
             $table->string('phone_number')->unique();
             $table->string('password');
             $table->enum('type', UserTypeEnum::getValues())->default(UserTypeEnum::ADMIN);
+            $table->boolean('is_active')->default(true);
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
 

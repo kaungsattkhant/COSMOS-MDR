@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Services\Admin\User\UserService;
 use App\Http\Resources\Admin\User\UserResource;
 use App\Http\Requests\Admin\User\UserStoreRequest;
+use App\Http\Resources\Admin\User\UserListResource;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UserController extends Controller
@@ -21,13 +22,13 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $users = $this->service->getAll($request->all());
-        return UserResource::collection($users);
+        return UserListResource::collection($users);
     }
     public function show(int $userId)
     {
         try {
             $user = $this->service->getDetail($userId);
-            return new UserResource($user);
+            return new UserListResource($user);
         } catch (ModelNotFoundException $e) {
             return ResponseMessage('User not found', 404);
         }
@@ -36,6 +37,6 @@ class UserController extends Controller
     public function storeOrUpdate(UserStoreRequest $request)
     {
         $user = $this->service->save($request->all());
-        return new UserResource($user);
+        return new UserListResource($user);
     }
 }

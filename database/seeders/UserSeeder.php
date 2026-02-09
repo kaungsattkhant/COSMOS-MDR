@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Enums\UserTypeEnum;
 use App\Models\User;
+use App\Enums\UserTypeEnum;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class UserSeeder extends Seeder
@@ -14,17 +15,21 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->create([
+        $user=User::factory()->create([
             'username' => 'superadmin',
             'phone_number' => '091234',
             'email' => 'superadmin@example.com',
             'type' => UserTypeEnum::SUPERADMIN->value,
         ]);
+        // Get all permissions (or specific ones)
+        $permissions = Permission::where('guard_name', 'admin')->pluck('name')->toArray();
 
-        User::factory()->count(10)->create([
+        // Sync permissions to user
+        $user->syncPermissions($permissions);
+        User::factory()->count(20)->create([
             'type' => UserTypeEnum::ADMIN->value,
         ]);
-        User::factory()->count(10)->create([
+        User::factory()->count(20)->create([
             'type' => UserTypeEnum::STAFF->value,
         ]);
     }

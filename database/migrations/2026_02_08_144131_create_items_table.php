@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('code')->unique();      // SKU / Item Code
             $table->string('name');
             $table->text('description')->nullable();
+            $table->foreignId('uom_id')->nullable()->constrained('uoms')->nullOnDelete();
+            $table->foreignId('item_category_id')->nullable()->constrained('item_categories')->nullOnDelete();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

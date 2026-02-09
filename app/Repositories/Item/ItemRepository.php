@@ -4,16 +4,16 @@ namespace App\Repositories\Item;
 
 use App\Models\Item;
 
-class ItemRepository
+class ItemRepository implements ItemInterface
 {
     public function all(array $data)
     {
-        $query = Item::orderBy('id', 'asc');
-        
+        $query = Item::query()->orderBy('id', 'asc')->filter($data);
+
         if (isset($data['page'])) {
             return $query->paginate($data['per_page'] ?? 20);
         }
-        
+
         return $query->get();
     }
 

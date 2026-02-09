@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\Admin\CommonController;
 use App\Http\Controllers\Api\Admin\SupplierController;
 use App\Http\Controllers\Api\Admin\PermissionController;
 use App\Http\Controllers\Api\Admin\ItemCategoryController;
+use App\Http\Controllers\Api\Admin\UomController;
 
 //auth
 
@@ -41,6 +42,12 @@ Route::prefix('admin')->group(function () {
         Route::get('{id}', 'show');
         Route::post('/', 'storeOrUpdate');
     });
+    //bank (within SupplierController)
+    Route::prefix('banks')->controller(SupplierController::class)->group(function () {
+        Route::get('/', 'bankIndex');
+        Route::get('{id}', 'bankShow');
+        Route::post('/', 'bankStoreOrUpdate');
+    });
     //supplier
     Route::prefix('suppliers')->controller(SupplierController::class)->group(function () {
         Route::get('/', 'index');
@@ -52,5 +59,11 @@ Route::prefix('admin')->group(function () {
         Route::get('/', 'index');
         Route::get('{id}', 'show');
         Route::post('/', 'storeOrUpdate');
+    });
+    //uom
+    Route::prefix('uoms')->controller(ItemController::class)->group(function () {
+        Route::get('/', 'uomIndex');
+        Route::get('{id}', 'uomShow');
+        Route::post('/', 'uomStoreOrUpdate');
     });
 });

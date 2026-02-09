@@ -9,7 +9,7 @@ class ItemCategoryService
 {
     public function getAll(array $data)
     {
-        $query = ItemCategory::orderBy('id', 'asc');
+        $query = ItemCategory::query()->orderBy('id', 'asc')->filter($data);
         if (isset($data['page'])) {
             return $query->paginate($data['per_page'] ?? 20);
         }

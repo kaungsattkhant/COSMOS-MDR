@@ -3,12 +3,59 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\Admin\Item\ItemService;
+use App\Http\Resources\Admin\Item\ItemListResource;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ItemController extends Controller
 {
-    //
-    public function index(Request $request){
-        
+    public function __construct(
+        private ItemService $service,
+        private UomService $uomService
+    ) {}
+
+    public function index(Request $request)
+    {
+        $items = $this->service->getAllItems($request->all());
+        return ItemListResource::collection($items);
+    }
+
+    public function show(int $id)
+    {
+        try {
+            $item = $this->service->getItemDetail($id);
+            return new ItemListResource($item);
+        } catch (ModelNotFoundException $e) {
+            return ResponseMessage('Data not found', 404);
+        }
+    }
+
+    public function storeOrUpdate(Request $request)
+    {
+        $item = $this->service->saveItem($request->all());
+        return new ItemListResource($item);
+    }
+
+    public function uomIndex(Request $request)
+    {
+        $uoms = $this->uomService->getAll($request->all());
+        return UomListResource::collection($uoms);
+    }
+
+    public function uomShow(int $id)
+    {
+        try {
+            $uom = $this->uomService->getDetail($id);
+            return new UomListResource($uom);
+        } catch (ModelNotFoundException $e) {
+            return ResponseMessage('Data not found', 404);
+        }
+    }
+
+    public function uomStoreOrUpdate(Request $request)
+    {
+        $uom = $this->uomService->save($request->all());
+        return new UomListResource($uom);
     }
 }

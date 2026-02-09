@@ -8,18 +8,18 @@ class SupplierRepository
 {
     public function all(array $data)
     {
-        $query = Supplier::orderBy('id', 'asc');
-        
+        $query = Supplier::query()->with('bank')->orderBy('id', 'asc')->filter($data);
+
         if (isset($data['page'])) {
             return $query->paginate($data['per_page'] ?? 20);
         }
-        
+
         return $query->get();
     }
 
     public function findById(int $id)
     {
-        return Supplier::findOrFail($id);
+        return Supplier::with('bank')->findOrFail($id);
     }
 
     public function updateOrCreate(array $attributes, array $values = [])

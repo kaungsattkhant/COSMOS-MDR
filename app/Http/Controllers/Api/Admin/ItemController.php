@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
+use App\Models\Item;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Item\ItemStoreOrUpdateRequest;
 use App\Services\Admin\Item\ItemService;
 use App\Http\Resources\Admin\Item\ItemListResource;
-use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Http\Requests\Admin\Item\ItemStoreOrUpdateRequest;
+use App\Http\Resources\Admin\Item\ItemSupplierPriceListResource;
 
 class ItemController extends Controller
 {
@@ -35,6 +37,18 @@ class ItemController extends Controller
     {
         $item = $this->service->saveItem($request->all());
         return new ItemListResource($item);
+    }
+
+    public function storeItemSupplierPrice(Request $request)
+    {
+        $itemSupplierPrice= $this->service->storeItemSupplierPrice($request->all());
+        return new ItemSupplierPriceListResource($itemSupplierPrice);
+    }
+
+    public function getItemSupplierPrice(int $id)
+    {
+        $itemSupplier= $this->service->getItemSupplierPrice($id);
+        return ItemSupplierPriceListResource::collection($itemSupplier);
     }
    
 }

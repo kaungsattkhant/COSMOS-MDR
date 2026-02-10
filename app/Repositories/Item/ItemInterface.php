@@ -2,6 +2,8 @@
 
 namespace App\Repositories\Item;
 
+use App\Models\Item;
+
 interface ItemInterface
 {
     public function all(array $data);
@@ -9,4 +11,8 @@ interface ItemInterface
     public function findById(int $id);
 
     public function updateOrCreate(array $attributes, array $values = []);
+
+    public function getItemSupplierPrice(int $itemId);  
+
+    public function saveItemSupplierPrice(Item $item,array $values);
 }

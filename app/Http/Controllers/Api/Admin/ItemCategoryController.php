@@ -41,4 +41,6 @@ class ItemCategoryController extends Controller
         $user = $this->service->save($request->all());
         return new ItemCategoryListResource($user);
     }
+
+    
 }

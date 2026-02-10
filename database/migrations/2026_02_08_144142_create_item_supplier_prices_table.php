@@ -15,13 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('item_id')->constrained()->cascadeOnDelete();
             $table->foreignId('supplier_id')->constrained()->cascadeOnDelete();
-
             $table->double('price')->default(0);
-            $table->date('effective_date')->nullable(); // price start date
+            $table->dateTime('effective_date')->nullable()->useCurrent(); // price start date
             $table->boolean('is_active')->default(true);
-
             $table->timestamps();
-
             $table->unique(['item_id', 'supplier_id', 'effective_date']);
         });
     }

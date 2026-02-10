@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\Admin\SupplierController;
 use App\Http\Controllers\Api\Admin\InventoryController;
 use App\Http\Controllers\Api\Admin\PermissionController;
 use App\Http\Controllers\Api\Admin\ItemCategoryController;
+use App\Http\Controllers\Api\Admin\PurchaseOrderController;
 //auth
 
 Route::prefix('admin')->group(function () {
@@ -65,6 +66,8 @@ Route::prefix('admin')->group(function () {
             Route::get('/', 'index')->middleware('permission:item.list');
             Route::get('{id}', 'show')->middleware('permission:item.detail');
             Route::post('/', 'storeOrUpdate')->middleware('permission:item.create');
+            Route::get('{itemId}/item_supplier_prices', 'getItemSupplierPrice')->middleware('permission:item.item-supplier-price-list');
+            Route::post('item_supplier_prices', 'storeItemSupplierPrice')->middleware('permission:item.item-supplier-price-create');
         });
 
         Route::prefix('uoms')->controller(UomController::class)->group(function () {
@@ -83,6 +86,12 @@ Route::prefix('admin')->group(function () {
             Route::get('/', 'index')->middleware('permission:customer.list');
             Route::get('{id}', 'show')->middleware('permission:customer.detail');
             Route::post('/', 'storeOrUpdate')->middleware('permission:customer.create');
+        });
+
+        Route::prefix('purchase_orders')->controller(PurchaseOrderController::class)->group(function () {
+            Route::get('/', 'index')->middleware('permission:purchase_order.list');
+            Route::get('{id}', 'show')->middleware('permission:purchase_order.detail');
+            Route::post('/', 'storeOrUpdate')->middleware('permission:purchase_order.create');
         });
     });
 });

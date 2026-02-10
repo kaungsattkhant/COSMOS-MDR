@@ -32,14 +32,15 @@
     "item.list",
     "item.create",
     "item.detail",
-    "item.toggle"
+    "item.toggle",
+    "item.item-supplier-price-list",
+    "item.item-supplier-price-create"
   ],
   "customer":[
     "customer.list",
     "customer.create",
     "customer.detail",
     "customer.toggle"
-
   ],
    "inventory":[
     "inventory.list",

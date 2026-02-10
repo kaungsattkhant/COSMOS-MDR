@@ -2,9 +2,10 @@
 
 namespace App\Services\Admin\Item;
 
-use App\Http\Resources\Admin\Item\ItemListResource;
+use App\Models\Item;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\Item\ItemInterface;
+use App\Http\Resources\Admin\Item\ItemListResource;
 
 class ItemService
 {
@@ -28,7 +29,7 @@ class ItemService
     public function saveItem(array $data)
     {
         return DB::transaction(function () use ($data) {
-            $item= $this->repo->updateOrCreate(
+            $item = $this->repo->updateOrCreate(
                 ['id' => $data['id'] ?? null],
                 [
                     'code'              => $data['code'],
@@ -41,17 +42,23 @@ class ItemService
             );
             if (!empty($data['supplier_prices'])) {
                 foreach ($data['supplier_prices'] as $priceData) {
-                    $item->supplier_prices()->updateOrCreate(
-                        ['id' => $priceData['id'] ?? null],
-                        [
-                            'supplier_id' => $priceData['supplier_id'],
-                            'price'       => $priceData['price'],
-                            'is_active'   => $priceData['is_active'] ?? true,
-                        ]
+                    $this->repo->saveItemSupplierPrice(
+                        $item,$priceData
                     );
                 }
             }
             return new ItemListResource($item);
         });
+    }
+
+    public function getItemSupplierPrice(int $itemId)
+    {
+        return $this->repo->getItemSupplierPrice($itemId);
+    }
+
+    public function storeItemSupplierPrice(array $data)
+    {
+        $item = Item::findOrFail($data['item_id']);
+        return $this->repo->saveItemSupplierPrice($item,$data);
     }
 }

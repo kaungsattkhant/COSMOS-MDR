@@ -14,16 +14,17 @@ class PurchaseOrder extends Model
     protected $table = 'purchase_orders';
 
     protected $fillable = [
+        'po_no',
+        'po_invoice_no',
+        'po_date',
         'supplier_id',
-        'purchase_date',
-        'reference_no',
         'total_amount',
         'status',
-        'notes',
+        'remark',
     ];
 
     protected $casts = [
-        'purchase_date' => 'date',
+        'po_date' => 'date_time',
     ];
 
     public function supplier()
@@ -40,6 +41,6 @@ class PurchaseOrder extends Model
     {
         return $query
             ->when(isset($data['supplier_id']), fn (Builder $q) => $q->where('supplier_id', $data['supplier_id']))
-            ->when(!empty($data['search']), fn (Builder $q) => $q->where('reference_no', 'like', '%' . $data['search'] . '%'));
+            ->when(!empty($data['search']), fn (Builder $q) => $q->where('po_invoice_id', 'like', '%' . $data['search'] . '%'));
     }
 }

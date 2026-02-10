@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('purchase_orders', function (Blueprint $table) {
             $table->id();
+            $table->string('po_no')->unique();
+            $table->string('po_invoice_no')->unique()->nullable();
+            $table->dateTime('po_date')->defaultNow();
             $table->foreignId('supplier_id')->constrained('suppliers')->cascadeOnDelete();
-            $table->date('purchase_date');
-            $table->string('reference_no')->unique()->nullable();
             $table->double('total_amount')->default(0);
+            $table->double('paid_amount')->default(0);
             $table->string('status')->default('received'); // e.g., received, pending, ordered
-            $table->text('notes')->nullable();
+            $table->text('remark')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

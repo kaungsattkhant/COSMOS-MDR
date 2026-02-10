@@ -11,7 +11,7 @@ class PurchaseOrderStoreOrUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return auth('admin')->check();
     }
 
     /**
@@ -22,13 +22,14 @@ class PurchaseOrderStoreOrUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'po_invoice_no'=>'required|unique:purchase_orders,po_invoice_no',
+            'total_amount'=>'required|numeric|min:0',
+            'paid_amount'=>'required|numeric|min:0',
             'supplier_id' => 'required|exists:suppliers,id',
-            'purchase_date' => 'required|date',
-            'reference_no' => 'nullable|string|unique:purchase_orders,reference_no,' . ($this->id ?? 'NULL') . ',id',
-            'purchase_order_items' => 'required|array|min:1',
-            'purchase_order_items.*.item_id' => 'required|exists:items,id',
-            'purchase_order_items.*.quantity' => 'required|numeric|gt:0',
-            'purchase_order_items.*.purchase_price' => 'required|numeric|gte:0',
+            'items'       => 'required|array',
+            'items.*.item_id' => 'required|exists:items,id',
+            'items.*.qty'     => 'required|numeric|min:1',
+            'items.*.price'   => 'required|numeric|min:0',
         ];
     }
 }

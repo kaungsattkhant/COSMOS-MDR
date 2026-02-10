@@ -21,9 +21,10 @@ class ItemStoreOrUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
+        $id=$this->input('id');
         return [
            'name'=>'required|max:255',
-           'code'=>'required|max:255|unique:items,code',
+           'code'=>'required|max:255|unique:items,code,'.$id,
            'uom_id'=>'required|exists:uoms,id',
            'item_category_id'=>'required|exists:item_categories,id'
         ];

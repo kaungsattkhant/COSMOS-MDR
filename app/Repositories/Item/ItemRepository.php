@@ -29,10 +29,29 @@ class ItemRepository implements ItemInterface
     }
 
     public function getItemSupplierPrice(int $itemId) {
-        return ItemSupplierPrice::where('item_id', $itemId)->with(['supplier','item'])->orderBy('id', 'asc')->get();
+        $latest = ItemSupplierPrice::selectRaw('MAX(id) as id')
+            ->where('item_id', $itemId)
+            ->groupBy('supplier_id');
+
+        return ItemSupplierPrice::joinSub($latest, 'latest_prices', function ($join) {
+            $join->on('item_supplier_prices.id', '=', 'latest_prices.id');
+        })
+            ->with(['supplier', 'item'])
+            ->get();
     }
 
     public function saveItemSupplierPrice(Item $item, array $values) {
         return $item->supplier_prices()->updateOrCreate(['id' => $values['id'] ?? null], $values);
+    }
+    public function getItemBySupplier(int $supplierId) {
+        $latest = ItemSupplierPrice::selectRaw('MAX(id) as id')
+            ->where('supplier_id', $supplierId)
+            ->groupBy('item_id');
+
+        return ItemSupplierPrice::joinSub($latest, 'latest_prices', function ($join) {
+            $join->on('item_supplier_prices.id', '=', 'latest_prices.id');
+        })
+            ->with(['supplier', 'item'])
+            ->get();
     }
 }

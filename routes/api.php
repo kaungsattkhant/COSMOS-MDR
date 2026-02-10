@@ -68,6 +68,7 @@ Route::prefix('admin')->group(function () {
             Route::post('/', 'storeOrUpdate')->middleware('permission:item.create');
             Route::get('{itemId}/item_supplier_prices', 'getItemSupplierPrice')->middleware('permission:item.item-supplier-price-list');
             Route::post('item_supplier_prices', 'storeItemSupplierPrice')->middleware('permission:item.item-supplier-price-create');
+            Route::get('item_by_supplier/{supplierId}', 'getItemBySupplier')->middleware('permission:item.create');
         });
 
         Route::prefix('uoms')->controller(UomController::class)->group(function () {

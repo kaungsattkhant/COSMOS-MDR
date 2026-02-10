@@ -2,6 +2,7 @@
 
 namespace App\Services\Admin\PurchaseOrder;
 
+use App\Models\PurchaseOrder;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\PurchaseOrder\PurchaseOrderInterface;
 
@@ -24,23 +25,45 @@ class PurchaseOrderService
         return $this->repo->findById($id);
     }
 
+    private function generatePoNo(): string
+    {
+        $prefix = 'PO';
+        $date   = now()->format('Ymd');
+
+        $lastPo = PurchaseOrder::whereDate('created_at', now())
+            ->orderBy('id', 'desc')
+            ->first();
+
+        if (!$lastPo) {
+            $number = 1;
+        } else {
+            $lastNumber = intval(substr($lastPo->po_no, -4)); // PO20260210-0001
+            $number = $lastNumber + 1;
+        }
+
+        return "{$prefix}{$date}-" . str_pad($number, 4, '0', STR_PAD_LEFT);
+    }
+
+
     public function savePurchaseOrder(array $data)
     {
         return DB::transaction(function () use ($data) {
-            $totalAmount = 0;
-            foreach ($data['purchase_order_items'] as $item) {
-                $totalAmount += $item['quantity'] * $item['purchase_price'];
-            }
+            // $totalAmount = 0;
+            // foreach ($data['purchase_order_items'] as $item) {
+            //     $totalAmount += $item['qty'] * $item['price'];
+            // }
 
             $purchaseOrder = $this->repo->updateOrCreate(
                 ['id' => $data['id'] ?? null],
                 [
+                    'po_no' =>$this->generatePoNo(),
                     'supplier_id'   => $data['supplier_id'],
-                    'purchase_date' => $data['purchase_date'],
-                    'reference_no'  => $data['reference_no'] ?? null,
+                    'po_date' => $data['po_date'],
+                    'po_invoice_no'  => $data['po_invoice_no'] ?? null,
                     'status'        => $data['status'] ?? 'received',
-                    'notes'         => $data['notes'] ?? null,
-                    'total_amount'  => $totalAmount,
+                    'remark'         => $data['remark'] ?? null,
+                    'total_amount'  => $data['total_amount'],
+                    'paid_amount'  => $data['paid_amount'],
                 ]
             );
 
@@ -49,12 +72,11 @@ class PurchaseOrderService
             foreach ($data['purchase_order_items'] as $itemData) {
                 $purchaseOrder->purchase_order_items()->create([
                     'item_id'        => $itemData['item_id'],
-                    'quantity'       => $itemData['quantity'],
-                    'purchase_price' => $itemData['purchase_price'],
-                    'sub_total'      => $itemData['quantity'] * $itemData['purchase_price'],
+                    'qty'       => $itemData['qty'],
+                    'price' => $itemData['price'],
+                    'sub_total'      => $itemData['qty'] * $itemData['price'],
                 ]);
             }
-
             return $purchaseOrder->load(['supplier', 'purchase_order_items.item']);
         });
     }

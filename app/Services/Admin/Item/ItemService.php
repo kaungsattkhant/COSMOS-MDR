@@ -35,7 +35,7 @@ class ItemService
                     'code'              => $data['code'],
                     'name'              => $data['name'],
                     'description'       => $data['description'] ?? null,
-                    'unit'              => $data['unit'] ?? null,
+                    'uom_id'            => $data['uom_id'] ?? null,
                     'is_active'         => $data['is_active'] ?? true,
                     'item_category_id'  => $data['item_category_id'] ?? null,
                 ]
@@ -60,5 +60,9 @@ class ItemService
     {
         $item = Item::findOrFail($data['item_id']);
         return $this->repo->saveItemSupplierPrice($item,$data);
+    }
+    public function getItemBySupplier(int $supplierId)
+    {
+        return $this->repo->getItemBySupplier($supplierId);
     }
 }

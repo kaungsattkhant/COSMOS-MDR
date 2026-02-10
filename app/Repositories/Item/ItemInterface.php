@@ -15,4 +15,6 @@ interface ItemInterface
     public function getItemSupplierPrice(int $itemId);  
 
     public function saveItemSupplierPrice(Item $item,array $values);
+
+    public function getItemBySupplier(int $supplierId);
 }

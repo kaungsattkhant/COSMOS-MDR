@@ -50,5 +50,11 @@ class ItemController extends Controller
         $itemSupplier= $this->service->getItemSupplierPrice($id);
         return ItemSupplierPriceListResource::collection($itemSupplier);
     }
+
+    public function getItemBySupplier(int $supplierId)
+    {
+        $items= $this->service->getItemBySupplier($supplierId);
+        return  ItemSupplierPriceListResource::collection($items);
+    }
    
 }

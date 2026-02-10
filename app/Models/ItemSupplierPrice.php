@@ -9,7 +9,7 @@ class ItemSupplierPrice extends Model
     protected $fillable = [
         'item_id',
         'supplier_id',
-        'purchase_price',
+        'price',
         'effective_date',
         'is_active',
     ];

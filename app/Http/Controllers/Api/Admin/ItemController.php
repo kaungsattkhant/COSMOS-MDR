@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Item\ItemStoreOrUpdateRequest;
 use App\Services\Admin\Item\ItemService;
 use App\Http\Resources\Admin\Item\ItemListResource;
 use Illuminate\Http\Request;
@@ -30,7 +31,7 @@ class ItemController extends Controller
         }
     }
 
-    public function storeOrUpdate(Request $request)
+    public function storeOrUpdate(ItemStoreOrUpdateRequest $request)
     {
         $item = $this->service->saveItem($request->all());
         return new ItemListResource($item);

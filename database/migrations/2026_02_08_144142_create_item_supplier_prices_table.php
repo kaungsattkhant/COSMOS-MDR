@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('item_id')->constrained()->cascadeOnDelete();
             $table->foreignId('supplier_id')->constrained()->cascadeOnDelete();
 
-            $table->decimal('purchase_price', 15, 2);
+            $table->double('price')->default(0);
             $table->date('effective_date')->nullable(); // price start date
             $table->boolean('is_active')->default(true);
 

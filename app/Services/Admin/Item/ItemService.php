@@ -2,6 +2,7 @@
 
 namespace App\Services\Admin\Item;
 
+use App\Http\Resources\Admin\Item\ItemListResource;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\Item\ItemInterface;
 
@@ -27,7 +28,7 @@ class ItemService
     public function saveItem(array $data)
     {
         return DB::transaction(function () use ($data) {
-            return $this->repo->updateOrCreate(
+            $item= $this->repo->updateOrCreate(
                 ['id' => $data['id'] ?? null],
                 [
                     'code'              => $data['code'],
@@ -38,6 +39,19 @@ class ItemService
                     'item_category_id'  => $data['item_category_id'] ?? null,
                 ]
             );
+            if (!empty($data['supplier_prices'])) {
+                foreach ($data['supplier_prices'] as $priceData) {
+                    $item->supplier_prices()->updateOrCreate(
+                        ['id' => $priceData['id'] ?? null],
+                        [
+                            'supplier_id' => $priceData['supplier_id'],
+                            'price'       => $priceData['price'],
+                            'is_active'   => $priceData['is_active'] ?? true,
+                        ]
+                    );
+                }
+            }
+            return new ItemListResource($item);
         });
     }
 }

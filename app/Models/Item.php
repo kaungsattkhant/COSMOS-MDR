@@ -28,7 +28,7 @@ class Item extends Model
         return $this->belongsTo(Uom::class, 'uom_id');
     }
 
-    public function supplierPrices()
+    public function supplier_prices()
     {
         return $this->hasMany(ItemSupplierPrice::class);
     }

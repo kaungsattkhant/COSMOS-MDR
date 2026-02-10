@@ -23,8 +23,8 @@ class ItemListResource extends JsonResource
             'item_category_id'  => $this->item_category_id,
             'item_category'     => $this->item_category,
             'uom'     => $this->uom,
+            'supplier_prices'   => $this->supplier_prices,
             'is_active'         => $this->is_active,
-
         ];
     }
 }

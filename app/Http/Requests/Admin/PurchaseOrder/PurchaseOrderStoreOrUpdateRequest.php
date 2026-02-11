@@ -27,10 +27,10 @@ class PurchaseOrderStoreOrUpdateRequest extends FormRequest
             'total_amount' => 'required|numeric|min:0',
             'paid_amount'=>'required|numeric|min:0',
             'supplier_id' => 'required|exists:suppliers,id',
-            'items'       => 'required|array',
-            'items.*.item_id' => 'required|exists:items,id',
-            'items.*.qty'     => 'required|numeric|min:1',
-            'items.*.price'   => 'required|numeric|min:0',
+            'purchase_order_items'       => 'required|array',
+            'purchase_order_items.*.item_id' => 'required|exists:items,id',
+            'purchase_order_items.*.qty'     => 'required|numeric|min:1',
+            'purchase_order_items.*.price'   => 'required|numeric|min:0',
         ];
     }
 }

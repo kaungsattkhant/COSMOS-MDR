@@ -69,7 +69,7 @@ class PurchaseOrderService
             );
             $purchaseOrder->purchase_order_items()->delete();
 
-            foreach ($data['items'] as $itemData) {
+            foreach ($data['purchase_order_items'] as $itemData) {
                 $purchaseOrder->purchase_order_items()->create([
                     'item_id'        => $itemData['item_id'],
                     'qty'       => $itemData['qty'],

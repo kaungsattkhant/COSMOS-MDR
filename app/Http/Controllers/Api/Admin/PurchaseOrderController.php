@@ -33,7 +33,7 @@ class PurchaseOrderController extends Controller
 
     public function storeOrUpdate(PurchaseOrderStoreOrUpdateRequest $request)
     {
-        $purchaseOrder = $this->service->savePurchaseOrder($request->validated());
+        $purchaseOrder = $this->service->savePurchaseOrder($request->all());
         return new PurchaseOrderListResource($purchaseOrder);
     }
 }

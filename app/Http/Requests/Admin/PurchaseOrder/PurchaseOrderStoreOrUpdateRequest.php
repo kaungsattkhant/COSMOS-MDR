@@ -23,7 +23,8 @@ class PurchaseOrderStoreOrUpdateRequest extends FormRequest
     {
         return [
             'po_invoice_no'=>'required|unique:purchase_orders,po_invoice_no',
-            'total_amount'=>'required|numeric|min:0',
+            'po_date'=> 'required|date',
+            'total_amount' => 'required|numeric|min:0',
             'paid_amount'=>'required|numeric|min:0',
             'supplier_id' => 'required|exists:suppliers,id',
             'items'       => 'required|array',

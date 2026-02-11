@@ -21,8 +21,8 @@ class PurchaseOrderItemListResource extends JsonResource
                 'name' => $this->item->name,
                 'code' => $this->item->code,
             ],
-            'quantity' => $this->quantity,
-            'purchase_price' => $this->purchase_price,
+            'qty' => $this->qty,
+            'price' => $this->price,
             'sub_total' => $this->sub_total,
         ];
     }

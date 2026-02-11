@@ -2,19 +2,22 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use App\Repositories\Role\RoleRepository;
-use App\Repositories\Role\RoleInterface;
-use App\Repositories\Item\ItemRepository;
-use App\Repositories\Item\ItemInterface;
-use App\Repositories\Supplier\SupplierRepository;
-use App\Repositories\Supplier\SupplierInterface;
-use App\Repositories\Bank\BankInterface;
-use App\Repositories\Uom\UomRepository;
+use App\Models\PurchaseOrder;
 use App\Repositories\Uom\UomInterface;
+use App\Repositories\Uom\UomRepository;
+use Illuminate\Support\ServiceProvider;
+use App\Repositories\Bank\BankInterface;
+use App\Repositories\Item\ItemInterface;
+use App\Repositories\Role\RoleInterface;
 use App\Repositories\Bank\BankRepository;
+use App\Repositories\Item\ItemRepository;
+use App\Repositories\Role\RoleRepository;
 use App\Repositories\Customer\CustomerInterface;
+use App\Repositories\Supplier\SupplierInterface;
 use App\Repositories\Customer\CustomerRepository;
+use App\Repositories\Supplier\SupplierRepository;
+use App\Repositories\PurchaseOrder\PurchaseOrderInterface;
+use App\Repositories\PurchaseOrder\PurchaseOrderRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -38,5 +41,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(BankInterface::class, BankRepository::class);
         $this->app->bind(CustomerInterface::class, CustomerRepository::class);
         $this->app->bind(BankInterface::class, BankRepository::class);
+        $this->app->bind(PurchaseOrderInterface::class, PurchaseOrderRepository::class);
     }
 }

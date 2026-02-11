@@ -24,7 +24,7 @@ class PurchaseOrder extends Model
     ];
 
     protected $casts = [
-        'po_date' => 'date_time',
+        'po_date' => 'datetime',
     ];
 
     public function supplier()

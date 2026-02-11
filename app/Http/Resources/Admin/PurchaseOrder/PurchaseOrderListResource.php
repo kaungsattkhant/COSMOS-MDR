@@ -16,15 +16,15 @@ class PurchaseOrderListResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'po_invoice_no' => $this->po_invoice_no,
+            'po_date' => $this->po_date->format('Y-m-d'),
+            'total_amount' => $this->total_amount,
+            'status' => $this->status,
+            'remark' => $this->remark,
             'supplier' => [
                 'id' => $this->supplier->id,
                 'name' => $this->supplier->name,
             ],
-            'purchase_date' => $this->purchase_date->format('Y-m-d'),
-            'reference_no' => $this->reference_no,
-            'total_amount' => $this->total_amount,
-            'status' => $this->status,
-            'notes' => $this->notes,
             'purchase_order_items' => PurchaseOrderItemListResource::collection($this->whenLoaded('purchase_order_items')),
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
         ];

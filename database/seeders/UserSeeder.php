@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $user=User::factory()->create([
+        $user=User::factory()->firstOrCreate(['username' => 'superadmin', 'phone_number' => '091234', 'email' => 'superadmin@example.com', 'type' => UserTypeEnum::SUPERADMIN->value],[
             'username' => 'superadmin',
             'phone_number' => '091234',
             'email' => 'superadmin@example.com',

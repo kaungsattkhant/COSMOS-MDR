@@ -47,5 +47,10 @@
     "inventory.create",
     "inventory.detail",
     "inventory.toggle"
+  ],
+  "purchase_order":[
+    "purchase_order.list",
+    "purchase_order.create",
+    "purchase_order.detail"
   ]
 }

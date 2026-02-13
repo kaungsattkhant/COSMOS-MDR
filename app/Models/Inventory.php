@@ -8,6 +8,12 @@ use Illuminate\Database\Eloquent\Builder;
 class Inventory extends Model
 {
     protected $fillable = ['name', 'is_active'];
+
+    public function inventory_ledgers()
+    {
+        return $this->hasMany(InventoryLedger::class);
+    }
+
     public function scopeFilter(Builder $query, array $data): Builder
     {
         return $query

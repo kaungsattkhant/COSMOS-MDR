@@ -40,6 +40,11 @@ class Item extends Model
             ->withTimestamps();
     }
 
+    public function inventory_ledger_items()
+    {
+        return $this->hasMany(InventoryLedgerItem::class);
+    }
+
     public function scopeFilter(Builder $query, array $data): Builder
     {
         return $query

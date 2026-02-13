@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\Admin\InventoryController;
 use App\Http\Controllers\Api\Admin\PermissionController;
 use App\Http\Controllers\Api\Admin\ItemCategoryController;
 use App\Http\Controllers\Api\Admin\PurchaseOrderController;
+use App\Http\Controllers\Api\Admin\InventoryLedgerController;
 //auth
 
 Route::prefix('admin')->group(function () {
@@ -93,6 +94,13 @@ Route::prefix('admin')->group(function () {
             Route::get('/', 'index')->middleware('permission:purchase_order.list');
             Route::get('{id}', 'show')->middleware('permission:purchase_order.detail');
             Route::post('/', 'storeOrUpdate')->middleware('permission:purchase_order.create');
+            Route::post('/partial_received', 'partialReceived');
+            // ->middleware('permission:purchase_order.partial_received');
+        });
+
+        Route::prefix('inventory_ledgers')->controller(InventoryLedgerController::class)->group(function () {
+            Route::get('/', 'index')->middleware('permission:inventory_ledger.list');
+            Route::get('{id}', 'show')->middleware('permission:inventory_ledger.detail');
         });
     });
 });

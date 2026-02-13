@@ -31,6 +31,14 @@ class AppServiceProvider extends ServiceProvider
                 'bank'=> 'App\Models\Bank',
                 'item_category'=> 'App\Models\ItemCategory',
                 'item'=> 'App\Models\Item',
+                'purchase_order'=>'App\Models\PurchaseOrder',
+                'inventory'=> 'App\Models\Inventory',
+                'inventory_ledger'=> 'App\Models\InventoryLedger',
+                'inventory_ledger_item'=> 'App\Models\InventoryLedgerItem',
+                'item_supplier_price'=> 'App\Models\ItemSupplierPrice',
+                'grn'=> 'App\Models\Grn',
+                'grn_item'=> 'App\Models\GrnItem',
+                'purchase_order_item'=> 'App\Models\PurchaseOrderItem',
             ]);
     }
 }

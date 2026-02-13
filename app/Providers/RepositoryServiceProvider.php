@@ -16,8 +16,12 @@ use App\Repositories\Customer\CustomerInterface;
 use App\Repositories\Supplier\SupplierInterface;
 use App\Repositories\Customer\CustomerRepository;
 use App\Repositories\Supplier\SupplierRepository;
+use App\Repositories\InventoryLedger\InventoryLedgerInterface;
+use App\Repositories\InventoryLedger\InventoryLedgerRepository;
 use App\Repositories\PurchaseOrder\PurchaseOrderInterface;
 use App\Repositories\PurchaseOrder\PurchaseOrderRepository;
+use App\Repositories\InventoryLedgerItem\InventoryLedgerItemInterface;
+use App\Repositories\InventoryLedgerItem\InventoryLedgerItemRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -42,5 +46,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(CustomerInterface::class, CustomerRepository::class);
         $this->app->bind(BankInterface::class, BankRepository::class);
         $this->app->bind(PurchaseOrderInterface::class, PurchaseOrderRepository::class);
+        $this->app->bind(InventoryLedgerInterface::class, InventoryLedgerRepository::class);
     }
 }

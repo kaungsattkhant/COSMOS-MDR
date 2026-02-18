@@ -98,6 +98,8 @@ class PurchaseOrderService
                 $data['item_id'] = $purchaseOrderItem->item_id;
                 $data['date_time'] = now();
                 $data['qty_received'] = $data['qty_received'];
+                $data['received_by'] = auth()->user()->id;
+                $data['received_at'] = now();
                 $purchaseOrder = $this->repo->partialReceived($data);
                 return $purchaseOrder;
             }

@@ -50,8 +50,8 @@ class PurchaseOrderRepository implements PurchaseOrderInterface
     {
         return GrnItem::where('id', $data['id'])->update([
             'status' => $data['status'],
-            'received_by' => auth()->user()->id,
-            'received_at' => now(),
+            'confirmed_by' => auth()->user()->id,
+            'confirmed_at' => now(),
             ]);
     }
 

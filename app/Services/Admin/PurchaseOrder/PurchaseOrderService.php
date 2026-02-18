@@ -2,10 +2,11 @@
 
 namespace App\Services\Admin\PurchaseOrder;
 
-use App\Models\PurchaseOrder;
-use Illuminate\Support\Facades\DB;
 use App\Enums\PurchaseOrderStatusEnum;
+use App\Models\PurchaseOrder;
+use App\Models\PurchaseOrderItem;
 use App\Repositories\PurchaseOrder\PurchaseOrderInterface;
+use Illuminate\Support\Facades\DB;
 
 class PurchaseOrderService
 {
@@ -57,7 +58,7 @@ class PurchaseOrderService
             $purchaseOrder = $this->repo->updateOrCreate(
                 ['id' => $data['id'] ?? null],
                 [
-                    'po_no' =>$this->generatePoNo(),
+                    'po_no' => $this->generatePoNo(),
                     'supplier_id'   => $data['supplier_id'],
                     'po_date' => $data['po_date'],
                     'po_invoice_no'  => $data['po_invoice_no'] ?? null,
@@ -79,5 +80,36 @@ class PurchaseOrderService
             }
             return $purchaseOrder->load(['supplier', 'purchase_order_items.item']);
         });
+    }
+
+    public function partialReceived(array $data)
+    {
+        return DB::transaction(
+            function () use ($data) {
+                $purchaseOrderItem = PurchaseOrderItem::findOrFail($data['purchase_order_item_id']);
+                if (!$purchaseOrderItem) {
+                    return ResponseMessage('Purchase order item not found', 404);
+                }
+                if ($data['qty_received'] > ($purchaseOrderItem->qty - $purchaseOrderItem->grn_items()->sum('qty_received'))) {
+                    return ResponseMessage('Received quantity exceeds ordered quantity', 400);
+                }
+                $data['purchase_order_id'] = $purchaseOrderItem->purchase_order_id;
+                $data['supplier_id'] = $purchaseOrderItem->purchase_order->supplier_id;
+                $data['item_id'] = $purchaseOrderItem->item_id;
+                $data['date_time'] = now();
+                $data['qty_received'] = $data['qty_received'];
+                $purchaseOrder = $this->repo->partialReceived($data);
+                return $purchaseOrder;
+            }
+        );
+    }
+    public function getPartialReceive(array $data)
+    {
+        return $this->repo->getPartialReceive($data);
+    }
+
+    public function updatePartialReceiveStatus(array $data)
+    {
+        return $this->repo->updatePartialReceiveStatus($data);
     }
 }

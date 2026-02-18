@@ -12,14 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('inventory_ledgers', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->dateTime('date_time');
-            $table->foreignId('inventory_id')->constrained('inventories')->cascadeOnDelete();
-            $table->string('transaction_type'); // e.g., GRN, Sale, Adjustment, Transfer
-            $table->unsignedBigInteger('transaction_id')->nullable(); // ID of the related transaction (polymorphic or direct ID)
-            $table->string('reference_no')->nullable();
-            $table->text('remarks')->nullable();
+            $table->foreignId('item_id')->constrained()->cascadeOnDelete();
+            $table->double('qty_in')->default(0);
+            $table->double('qty_out')->default(0);
+            $table->string('reference_type');   
+            $table->unsignedBigInteger('reference_id');
+            $table->foreignId('inventory_id')->nullable()->constrained()->nullOnDelete();
+            $table->text('remark')->nullable();
             $table->timestamps();
+            $table->index(['item_id', 'inventory_id']);
         });
     }
 

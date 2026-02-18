@@ -9,4 +9,10 @@ interface PurchaseOrderInterface
     public function findById(int $id);
 
     public function updateOrCreate(array $attributes, array $values = []);
+
+    public function partialReceived(array $data);
+
+    public function getPartialReceive(array $data);
+
+    public function updatePartialReceiveStatus(array $data);
 }

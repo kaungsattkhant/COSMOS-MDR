@@ -92,10 +92,12 @@ Route::prefix('admin')->group(function () {
 
         Route::prefix('purchase_orders')->controller(PurchaseOrderController::class)->group(function () {
             Route::get('/', 'index')->middleware('permission:purchase_order.list');
-            Route::get('{id}', 'show')->middleware('permission:purchase_order.detail');
             Route::post('/', 'storeOrUpdate')->middleware('permission:purchase_order.create');
-            Route::post('/partial_received', 'partialReceived');
+            Route::post('/partial_receives', 'partialReceived');
             // ->middleware('permission:purchase_order.partial_received');
+            Route::get('/partial_receives', 'getPartialReceive');
+            Route::post('/partial_receives/update_status', 'updatePartialReceiveStatus');
+            Route::get('{id}', 'show')->middleware('permission:purchase_order.detail');
         });
 
         Route::prefix('inventory_ledgers')->controller(InventoryLedgerController::class)->group(function () {

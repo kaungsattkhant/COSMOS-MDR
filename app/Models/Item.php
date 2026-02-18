@@ -16,6 +16,7 @@ class Item extends Model
         'uom_id',
         'is_active',
         'item_category_id',
+        'current_stock',
     ];
 
     public function item_category() 

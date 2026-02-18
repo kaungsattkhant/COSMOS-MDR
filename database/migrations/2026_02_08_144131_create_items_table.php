@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('uom_id')->nullable()->constrained('uoms')->nullOnDelete();
             $table->foreignId('item_category_id')->nullable()->constrained('item_categories')->nullOnDelete();
             $table->boolean('is_active')->default(true);
+            $table->double('current_stock')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

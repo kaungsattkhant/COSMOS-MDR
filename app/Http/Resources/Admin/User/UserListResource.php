@@ -17,10 +17,10 @@ class UserListResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'username' => $this->username,
             'email' => $this->email,
             'phone_number' => $this->phone_number,
-            'address' => $this->address,
+            'type' => $this->type,
             'is_active' => $this->is_active,
             'permissions'=>PermissionResource::collection($this->permissions),
         ];

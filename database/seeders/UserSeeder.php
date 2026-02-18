@@ -15,12 +15,19 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $user=User::factory()->firstOrCreate(['username' => 'superadmin', 'phone_number' => '091234', 'email' => 'superadmin@example.com', 'type' => UserTypeEnum::SUPERADMIN->value],[
+        $user = User::firstOrCreate(['username' => 'superadmin', 'phone_number' => '091234', 'email' => 'superadmin@example.com', 'type' => UserTypeEnum::SUPERADMIN->value], [
             'username' => 'superadmin',
             'phone_number' => '091234',
+            'password' => bcrypt('password'),
             'email' => 'superadmin@example.com',
             'type' => UserTypeEnum::SUPERADMIN->value,
         ]);
+        // $user=User::factory()->firstOrCreate(['username' => 'superadmin', 'phone_number' => '091234', 'email' => 'superadmin@example.com', 'type' => UserTypeEnum::SUPERADMIN->value],[
+        //     'username' => 'superadmin',
+        //     'phone_number' => '091234',
+        //     'email' => 'superadmin@example.com',
+        //     'type' => UserTypeEnum::SUPERADMIN->value,
+        // ]);
         // Get all permissions (or specific ones)
         $permissions = Permission::where('guard_name', 'admin')->pluck('name')->toArray();
 

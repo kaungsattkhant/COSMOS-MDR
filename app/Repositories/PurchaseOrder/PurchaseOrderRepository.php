@@ -48,11 +48,7 @@ class PurchaseOrderRepository implements PurchaseOrderInterface
 
     public function updatePartialReceiveStatus(array $data)
     {
-        return GrnItem::where('id', $data['id'])->update([
-            'status' => $data['status'],
-            'confirmed_by' => auth()->user()->id,
-            'confirmed_at' => now(),
-            ]);
+        return GrnItem::where('id', $data['id'])->update($data);
     }
 
 }

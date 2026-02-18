@@ -98,7 +98,7 @@ class PurchaseOrderService
                 $data['item_id'] = $purchaseOrderItem->item_id;
                 $data['date_time'] = now();
                 $data['qty_received'] = $data['qty_received'];
-                $data['received_by'] = auth()->user()->id;
+                $data['received_by'] = auth()->user('admin')->id;
                 $data['received_at'] = now();
                 $purchaseOrder = $this->repo->partialReceived($data);
                 return $purchaseOrder;
@@ -112,6 +112,8 @@ class PurchaseOrderService
 
     public function updatePartialReceiveStatus(array $data)
     {
+        $data['confirmed_by'] = auth()->user('admin')->id;
+        $data['confirmed_at'] = now();
         return $this->repo->updatePartialReceiveStatus($data);
     }
 }
